@@ -25,7 +25,10 @@ def get_movies_sessions(session_date: str = None) -> models.QuerySet:
 
 
 def get_movie_session_by_id(session_id: int) -> MovieSession:
-    return MovieSession.objects.get(id=session_id)
+    try:
+        return MovieSession.objects.get(id=session_id)
+    except MovieSession.DoesNotExist:
+        raise "No MovieSession matches the given query."
 
 
 def update_movie_session(
@@ -35,7 +38,11 @@ def update_movie_session(
         cinema_hall_id: int = None
 ) -> MovieSession:
 
-    session = MovieSession.objects.get(id=session_id)
+    try:
+        session = MovieSession.objects.get(id=session_id)
+    except MovieSession.DoesNotExist:
+        raise "No MovieSession matches the given query."
+
     if show_time:
         session.show_time = show_time
     if movie_id:
@@ -47,5 +54,8 @@ def update_movie_session(
 
 
 def delete_movie_session_by_id(session_id: int) -> None:
-    session = MovieSession.objects.get(id=session_id)
-    session.delete()
+    try:
+        session = MovieSession.objects.get(id=session_id)
+        session.delete()
+    except MovieSession.DoesNotExist:
+        raise "No MovieSession matches the given query."

@@ -12,7 +12,10 @@ def get_movies(genres_ids: list = None, actors_ids: list = None) -> QuerySet:
 
 
 def get_movie_by_id(movie_id: int) -> Movie:
-    return Movie.objects.get(id=movie_id)
+    try:
+        return Movie.objects.get(id=movie_id)
+    except Movie.DoesNotExist:
+        raise "No Movie matches the given query."
 
 
 def create_movie(

@@ -15,7 +15,7 @@ def get_movie_by_id(movie_id: int) -> Movie:
     try:
         return Movie.objects.get(id=movie_id)
     except Movie.DoesNotExist:
-        raise "No Movie matches the given query."
+        raise ValueError("No Movie matches the given query.")
 
 
 def create_movie(

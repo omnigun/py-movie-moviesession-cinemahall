@@ -28,7 +28,7 @@ def get_movie_session_by_id(session_id: int) -> MovieSession:
     try:
         return MovieSession.objects.get(id=session_id)
     except MovieSession.DoesNotExist:
-        raise "No MovieSession matches the given query."
+        raise ValueError("No MovieSession matches the given query.")
 
 
 def update_movie_session(
@@ -41,7 +41,7 @@ def update_movie_session(
     try:
         session = MovieSession.objects.get(id=session_id)
     except MovieSession.DoesNotExist:
-        raise "No MovieSession matches the given query."
+        raise ValueError("No MovieSession matches the given query.")
 
     if show_time:
         session.show_time = show_time
@@ -58,4 +58,4 @@ def delete_movie_session_by_id(session_id: int) -> None:
         session = MovieSession.objects.get(id=session_id)
         session.delete()
     except MovieSession.DoesNotExist:
-        raise "No MovieSession matches the given query."
+        raise ValueError("No MovieSession matches the given query.")
